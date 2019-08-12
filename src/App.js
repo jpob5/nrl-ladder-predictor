@@ -1,6 +1,5 @@
 import React from 'react';
 import Live from './components/Live'
-import logo from './logo.svg';
 import './styles/styles.scss';
 
 function App() {
