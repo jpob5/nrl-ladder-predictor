@@ -1,4 +1,5 @@
 import React from 'react';
+import { Container, Col, Row } from 'reactstrap';
 import $ from 'jquery';
 //import { storm, roosters, raiders, rabbitohs, eagles, eels, broncos, sharks, tigers, panthers, knights, warriors, cowboys, dragons, bulldogs, titans } from './Teams';
 import { log } from './Helpers';
@@ -17,17 +18,27 @@ class Live extends React.Component {
         this.currentIterations = 0;
         this.iterations = 1;
 
+        this.loopTime = 500;
+
         this.ladderType = 'dynamic';
+
+        this.loop = null;
         this.state = {
-            currentIterations: 0
+            currentIterations: 0,
+            speed: 'slow'
         }
 
         this.record = $.extend(true, {}, originalTeams);
     }
 
     componentDidMount() {
-        let loop = setInterval(() => { this.calculatePercentage() }, 500);
-        //this.calculatePercentage();
+        this.loop = setInterval(() => {
+            this.calculatePercentage()
+        }, this.loopTime);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.loop);
     }
 
     calculateSeasonResults(newLadder) {
@@ -50,11 +61,11 @@ class Live extends React.Component {
                 this.record[name].highest = j + 1;
             }
             this.record[name].average = ((this.record[name].average * (this.currentIterations - 1)) + (j + 1)) / this.currentIterations;
+            this.record[name].averagePoints = ((this.record[name].averagePoints * (this.currentIterations - 1)) + newLadder[j][1]) / this.currentIterations;
         }
     }
 
     calculatePercentage() {
-        //this.currentIterations += this.iterations;
         for (let x = 0; x < this.iterations; x++) {
             this.currentIterations++;
             var newLadder = ladder.map(function (arr) {
@@ -89,7 +100,7 @@ class Live extends React.Component {
             newLadder.sort(this.compareSecondColumn);
             this.calculateSeasonResults(newLadder);
         }
-        this.forceUpdate();
+        this.setState({});
     }
 
     printLadder() {
@@ -105,12 +116,12 @@ class Live extends React.Component {
                 <tr key={index}>
                     <td>{(index + 1)}</td>
                     <td>{team[1].name}</td>
-                    <td>{team[1].top8}</td>
                     <td>{safePercentage.toFixed(2)}</td>
                     <td>{top4SafePercentage.toFixed(2)}</td>
                     <td>{team[1].highest}</td>
                     <td>{team[1].lowest}</td>
                     <td>{team[1].average.toFixed(2)}</td>
+                    <td>{team[1].averagePoints.toFixed(2)}</td>
                 </tr>
             )
             return false;
@@ -120,11 +131,6 @@ class Live extends React.Component {
 
     compareSecondColumn(a, b) {
         if (a[1] === b[1]) {
-            // if (this.ladderType === 'current' || this.ladderType === 'dynamic') {
-            //     return (a[2] > b[2]) ? -1 : 1;
-            // } else {
-            //     return 0;
-            // }
             return (a[2] > b[2]) ? -1 : 1;
         }
         else {
@@ -141,25 +147,88 @@ class Live extends React.Component {
         }
     }
 
+    changeSpeed(speed) {
+        this.setState({
+            speed: speed
+        });
+        if (speed === 'slow') {
+            this.loopTime = 500;
+            this.iterations = 1;
+        } else if (speed === 'medium') {
+            this.loopTime = 200;
+            this.iterations = 1;
+        } else if (speed === 'fast') {
+            this.loopTime = 50;
+            this.iterations = 100;
+        }
+        clearInterval(this.loop);
+        this.loop = setInterval(() => {
+            this.calculatePercentage()
+        }, this.loopTime);
+    }
+
     render() {
         return (
-            <div className="ladder">
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>Pos.</th>
-                            <th>Team</th>
-                            <th>Top 8</th>
-                            <th>Top 8 %</th>
-                            <th>Top 4 %</th>
-                            <th>Highest</th>
-                            <th>Lowest</th>
-                            <th>Average</th>
-                        </tr>
-                        {this.printLadder()}
-                    </tbody>
-                </table>
-            </div>
+            <>
+                <h1>NRL Ladder Predictor</h1>
+                <Container>
+                    <Row>
+                        <Col xs="12" md="3">
+
+                            <div className="controls" role="radiogroup">
+                                <div>Simulations: {this.currentIterations} </div>
+                                <div id="loop-speed">Speed:</div>
+                                <div>
+                                    <label className="radio-container" htmlFor="slow">
+                                        <input id="slow"
+                                            name="speed"
+                                            type="radio"
+                                            onChange={(e) => { this.changeSpeed('slow') }}
+                                            checked={this.state.speed === 'slow' ? 'checked' : ''} /> Slow
+                                    </label>
+                                </div>
+                                <div>
+                                    <label className="radio-container" htmlFor="medium">
+                                        <input id="medium"
+                                            name="speed"
+                                            type="radio"
+                                            onChange={(e) => { this.changeSpeed('medium') }}
+                                            checked={this.state.speed === 'medium' ? 'checked' : ''} /> Medium
+                                    </label>
+                                </div>
+                                <div>
+                                    <label className="radio-container" htmlFor="fast">
+                                        <input id="fast"
+                                            name="speed"
+                                            type="radio"
+                                            onChange={(e) => { this.changeSpeed('fast') }}
+                                            checked={this.state.speed === 'fast' ? 'checked' : ''} /> Fast
+                                    </label>
+                                </div>
+                            </div>
+                        </Col>
+                        <Col xs="12" md="9">
+                            <div className="ladder">
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <th>Pos.</th>
+                                            <th>Team</th>
+                                            <th>Top 8 %</th>
+                                            <th>Top 4 %</th>
+                                            <th>Highest</th>
+                                            <th>Lowest</th>
+                                            <th>Average</th>
+                                            <th>Points</th>
+                                        </tr>
+                                        {this.printLadder()}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </>
         );
     }
 }

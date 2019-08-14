@@ -1,45 +1,87 @@
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
-        "Droid Sans", "Helvetica Neue", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+@import '~bootstrap/scss/bootstrap.scss';
+
+@mixin media($point) {
+    @if $point==sm {
+        @media (min-width: 576px) {
+            @content;
+        }
+    }
+
+    @if $point==md {
+        @media (min-width: 768px) {
+            @content;
+        }
+    }
+
+    @if $point==lg {
+        @media (min-width: 992px) {
+            @content;
+        }
+    }
+
+    @if $point==xl {
+        @media (min-width: 1200px) {
+            @content;
+        }
+    }
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+body {
+    font-family: 'Oxygen', sans-serif;
+    font-size: 20px;
+
+    h1 {
+        text-align: center;
+    }
+
+    .controls {
+        div {
+			display: inline-block;
+			margin-right: 10px; 
+			@include media(md) {
+				display: block;
+				margin: auto;
+			}
+        }
+    }
+
+    .ladder {
+        table {
+            border-collapse: collapse;
+            width: 300px;
+            margin: auto;
+            margin-bottom: 20px;
+
+            tr:nth-child(2n) {
+                background: rgba(200, 200, 255, 0.3);
+            }
+
+            tr:nth-child(9) {
+                border-bottom: 2px solid #000;
+            }
+
+            td {
+                padding: 5px;
+                min-width: 60px;
+                text-align: right;
+                font-family: 'Cutive Mono', monospace;
+                font-weight: bold;
+
+                &:first-of-type {
+                    min-width: 30px;
+                }
+
+                &:nth-child(1),
+                &:nth-child(2) {
+                    font-family: 'Oxygen', sans-serif;
+                    font-weight: normal;
+                    text-align: left;
+                }
+            }
+        }
+    }
+
+    label {
+        cursor: pointer;
+    }
 }
-.App {
-    text-align: center;
-  }
-  
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-    height: 40vmin;
-    pointer-events: none;
-  }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
-  }
-  
-  .App-link {
-    color: #61dafb;
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  

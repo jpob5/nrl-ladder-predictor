@@ -7,7 +7,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Roosters: {
         name: roosters,
@@ -15,7 +16,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Raiders: {
         name: raiders,
@@ -23,7 +25,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Rabbitohs: {
         name: rabbitohs,
@@ -31,7 +34,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Eagles: {
         name: eagles,
@@ -39,7 +43,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Eels: {
         name: eels,
@@ -47,7 +52,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Broncos: {
         name: broncos,
@@ -55,7 +61,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Sharks: {
         name: sharks,
@@ -63,7 +70,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Tigers: {
         name: tigers,
@@ -71,7 +79,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Panthers: {
         name: panthers,
@@ -79,7 +88,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Knights: {
         name: knights,
@@ -87,7 +97,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Warriors: {
         name: warriors,
@@ -95,7 +106,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Cowboys: {
         name: cowboys,
@@ -103,7 +115,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Dragons: {
         name: dragons,
@@ -111,7 +124,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Bulldogs: {
         name: bulldogs,
@@ -119,7 +133,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Titans: {
         name: titans,
@@ -127,7 +142,8 @@ let teams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     }
 }
 const originalTeams = {
@@ -137,7 +153,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Roosters: {
         name: roosters,
@@ -145,7 +162,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Raiders: {
         name: raiders,
@@ -153,7 +171,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Rabbitohs: {
         name: rabbitohs,
@@ -161,7 +180,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Eagles: {
         name: eagles,
@@ -169,7 +189,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Eels: {
         name: eels,
@@ -177,7 +198,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Broncos: {
         name: broncos,
@@ -185,7 +207,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Sharks: {
         name: sharks,
@@ -193,7 +216,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Tigers: {
         name: tigers,
@@ -201,7 +225,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Panthers: {
         name: panthers,
@@ -209,7 +234,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Knights: {
         name: knights,
@@ -217,7 +243,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Warriors: {
         name: warriors,
@@ -225,7 +252,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Cowboys: {
         name: cowboys,
@@ -233,7 +261,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Dragons: {
         name: dragons,
@@ -241,7 +270,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Bulldogs: {
         name: bulldogs,
@@ -249,7 +279,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     },
     Titans: {
         name: titans,
@@ -257,7 +288,8 @@ const originalTeams = {
         top4: 0,
         highest: 0,
         lowest: 0,
-        average: 0
+        average: 0,
+        averagePoints: 0
     }
 }
 
