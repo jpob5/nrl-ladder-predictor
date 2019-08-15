@@ -1,5 +1,8 @@
 @import '~bootstrap/scss/bootstrap.scss';
 
+@import url('https://fonts.googleapis.com/css?family=Oxygen&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap');
+
 @mixin media($point) {
     @if $point==sm {
         @media (min-width: 576px) {
@@ -62,13 +65,17 @@ body {
 
             td {
                 padding: 5px;
-                min-width: 60px;
+                min-width: 80px;
                 text-align: right;
                 font-family: 'Cutive Mono', monospace;
                 font-weight: bold;
 
                 &:first-of-type {
                     min-width: 30px;
+                }
+
+                &:nth-child(2) {
+                    min-width: 140px;
                 }
 
                 &:nth-child(1),

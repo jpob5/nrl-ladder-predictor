@@ -183,7 +183,7 @@ const originalTeams = {
         average: 0,
         averagePoints: 0
     },
-    Eagles: {
+    'Sea Eagles': {
         name: eagles,
         top8: 0,
         top4: 0,
