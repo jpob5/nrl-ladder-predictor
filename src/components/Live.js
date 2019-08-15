@@ -240,7 +240,7 @@ class Live extends React.Component {
                             <section>
                                 <h3>Notes</h3>
                                 <ul>
-                                    <li>The data this is based on is up to date as of 5:55PM 15/08/19. I'll try to update this as often as I can but I can't guarantee it will always be up to date.</li>
+                                    <li>The data this is based on is up to date as of 9:17am 16/08/19. I'll try to update this as often as I can but I can't guarantee it will always be up to date.</li>
                                     <li>The speed changes the number of simulations per second. Slow is for dramatic effect, Fast is to calculate a more realistic average. WARNING: Some older devices may not be able to run Fast efficiently. If you believe your device can't handle that speed, try Medium instead.</li>
                                     <li>The for/against of each game is selected randomly from 100 real results recorded from the NRL.</li>
                                     <li>Included in the real 100 results is a single 0 point margin constituting a draw. This occurs in approximately 1% of games.</li>
