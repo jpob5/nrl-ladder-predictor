@@ -1,0 +1,164 @@
+.ladder {
+    overflow: auto;
+
+    table {
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+        width: 100%;
+
+        tr {
+            background: $off-white;
+            td:nth-child(3) {
+                background: lighten($off-white, 5%);
+            }
+            // &.Storm {
+            //     background: rgb(15, 39, 82);
+            //     background: linear-gradient(135deg, rgba(15, 39, 82, 0.8) 0%, rgba(15, 39, 82, 0.8) 50%, rgba(99, 35, 144, 0.8) 50%, rgba(99, 35, 144, 0.8) 100%);
+            //     //color: #f9b018;
+            //     color: #fff;
+            // }
+
+            // &.Roosters {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(0, 48, 94, 0.8) 0%, rgba(0, 48, 94, 0.8) 50%, rgba(232, 44, 46, 0.8) 50%, rgba(232, 44, 46, 0.8) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Raiders {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(102, 204, 51, 0.8) 0%, rgba(102, 204, 51, 0.8) 50%, rgba(255, 255, 0, 0.8) 50%, rgba(255, 255, 0, 0.8) 100%);
+            //     color: #000;
+            // }
+
+            // &.Rabbitohs {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(0, 136, 0, 1) 0%, rgba(0, 136, 0, 1) 50%, rgba(238, 0, 0, 1) 50%, rgba(238, 0, 0, 1) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Eagles {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(136, 0, 0, 1) 0%, rgba(136, 0, 0, 1) 50%, rgba(186, 50, 50, 1) 50%, rgba(186, 50, 50, 1) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Eels {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, #00008b 0%, #00008b 50%, #cf9700 50%, #cf9700 100%);
+            //     color: #fff;
+            // }
+
+            // &.Broncos {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(103, 32, 46, 1) 0%, rgba(103, 32, 46, 1) 50%, rgba(248, 173, 45, 1) 50%, rgba(248, 173, 45, 1) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Panthers {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(100, 100, 100, 1) 50%, rgba(100, 100, 100, 1) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Sharks {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(51, 153, 255, 1) 0%, rgba(51, 153, 255, 1) 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
+            //     color: #000;
+            // }
+
+            // &.Tigers {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(225, 92, 0, 1) 0%, rgba(225, 92, 0, 1) 50%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Warriors {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(139, 138, 138, 1) 0%, rgba(139, 138, 138, 1) 50%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Knights {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(0, 0, 187, 1) 0%, rgba(0, 0, 187, 1) 50%, rgba(221, 0, 0, 1) 50%, rgba(221, 0, 0, 1) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Dragons {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(255, 50, 50, 1) 0%, rgba(255, 50, 50, 1) 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
+            //     color: #000;
+            // }
+
+            // &.Cowboys {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(205, 200, 12, 1) 0%, rgba(205, 200, 12, 1) 50%, rgba(10, 30, 67, 1) 50%, rgba(10, 30, 67, 1) 100%);
+            //     color: #fff;
+            // }
+
+            // &.Bulldogs {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(100, 100, 255, 1) 0%, rgba(100, 100, 255, 1) 50%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 1) 100%);
+            //     color: #000;
+            // }
+
+            // &.Titans {
+            //     background: rgb(0, 48, 94);
+            //     background: linear-gradient(135deg, rgba(10, 178, 224, 1) 0%, rgba(10, 178, 224, 1) 50%, rgba(248, 173, 45, 1) 50%, rgba(248, 173, 45, 1) 100%);
+            //     color: #000;
+            // }
+            &:nth-child(n+10):nth-child(-n+17) {
+                //background: #fff;
+                color: #777;
+            }
+
+            td,
+            th {
+                padding: 5px 10px;
+                text-align: center;
+            }
+
+            td {
+
+                min-width: 100px;
+
+                &:first-of-type {
+                    min-width: 30px;
+                }
+
+                &:nth-child(2) {
+                    min-width: 140px;
+                }
+
+                &:nth-child(2) {
+                    text-align: left;
+                }
+
+            }
+
+            &:nth-child(2n+1) {
+                //background: rgba(200,200,255,0.3);
+                background: $secondary-blue;
+
+                td:nth-child(3) {
+                    background: lighten($secondary-blue, 5%);
+                }
+            }
+
+            &:nth-child(1) {
+                text-align: center;
+                background: $blue;
+                color: #fff;
+
+                th:nth-child(3) {
+                    background: lighten($blue, 5%);
+                }
+            }
+
+            &:nth-child(9) {
+                border-bottom: 2px solid #000;
+            }
+        }
+    }
+}

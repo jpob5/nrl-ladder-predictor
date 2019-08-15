@@ -1,94 +1,11 @@
 @import '~bootstrap/scss/bootstrap.scss';
 
-@import url('https://fonts.googleapis.com/css?family=Oxygen&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Oxygen&display=swap');
+// @import url('https://fonts.googleapis.com/css?family=Cutive+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Exo+2&display=swap');
 
-@mixin media($point) {
-    @if $point==sm {
-        @media (min-width: 576px) {
-            @content;
-        }
-    }
-
-    @if $point==md {
-        @media (min-width: 768px) {
-            @content;
-        }
-    }
-
-    @if $point==lg {
-        @media (min-width: 992px) {
-            @content;
-        }
-    }
-
-    @if $point==xl {
-        @media (min-width: 1200px) {
-            @content;
-        }
-    }
-}
-
-body {
-    font-family: 'Oxygen', sans-serif;
-    font-size: 20px;
-
-    h1 {
-        text-align: center;
-    }
-
-    .controls {
-        div {
-			display: inline-block;
-			margin-right: 10px; 
-			@include media(md) {
-				display: block;
-				margin: auto;
-			}
-        }
-    }
-
-    .ladder {
-        table {
-            border-collapse: collapse;
-            width: 300px;
-            margin: auto;
-            margin-bottom: 20px;
-
-            tr:nth-child(2n) {
-                background: rgba(200, 200, 255, 0.3);
-            }
-
-            tr:nth-child(9) {
-                border-bottom: 2px solid #000;
-            }
-
-            td {
-                padding: 5px;
-                min-width: 80px;
-                text-align: right;
-                font-family: 'Cutive Mono', monospace;
-                font-weight: bold;
-
-                &:first-of-type {
-                    min-width: 30px;
-                }
-
-                &:nth-child(2) {
-                    min-width: 140px;
-                }
-
-                &:nth-child(1),
-                &:nth-child(2) {
-                    font-family: 'Oxygen', sans-serif;
-                    font-weight: normal;
-                    text-align: left;
-                }
-            }
-        }
-    }
-
-    label {
-        cursor: pointer;
-    }
-}
+@import './_mixins.scss';
+@import './_variables.scss';
+@import './_global.scss';
+@import './_controls.scss';
+@import './_ladder.scss';

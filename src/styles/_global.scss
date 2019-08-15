@@ -1,0 +1,30 @@
+body {
+    font-family: 'Oxygen', sans-serif;
+    font-size: 1rem;
+    background: $blue;
+    .container {
+        background: #fff;
+    }
+    h1 {
+        margin-top: 3rem;
+        color: $blue;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    h2, h3 {
+        color: $blue;
+        margin-bottom: 1rem;
+    }
+
+    section {
+        background: #fff;
+        border: 2px solid $blue;
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
+
+    li {
+        margin-bottom: 0.5rem;
+    }
+}

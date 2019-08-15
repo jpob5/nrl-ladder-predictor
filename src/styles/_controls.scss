@@ -1,0 +1,16 @@
+
+.controls {
+    div {
+        margin-bottom: 10px;
+    }
+    .speed-controls {
+        div {
+            display: inline-block;
+            margin-right: 10px;
+            label {
+                cursor: pointer;
+            }
+        }
+    }
+    
+}

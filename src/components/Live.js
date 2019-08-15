@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Col, Row } from 'reactstrap';
 import $ from 'jquery';
-//import { storm, roosters, raiders, rabbitohs, eagles, eels, broncos, sharks, tigers, panthers, knights, warriors, cowboys, dragons, bulldogs, titans } from './Teams';
 import { log } from './Helpers';
 import ladder from './Ladder';
 import draw from './Draw';
@@ -18,7 +17,7 @@ class Live extends React.Component {
         this.currentIterations = 0;
         this.iterations = 1;
 
-        this.loopTime = 500;
+        this.loopTime = 1000;
 
         this.ladderType = 'dynamic';
 
@@ -113,7 +112,7 @@ class Live extends React.Component {
             const top4Percentage = (Math.floor((recordAsArray[index][1].top4 / this.currentIterations) * 10000) / 100);
             const top4SafePercentage = isNaN(top4Percentage) ? 0 : top4Percentage;
             currentLadder.push(
-                <tr key={index}>
+                <tr key={index} className={team[1].name}>
                     <td>{(index + 1)}</td>
                     <td>{team[1].name}</td>
                     <td>{safePercentage.toFixed(2)}</td>
@@ -121,7 +120,7 @@ class Live extends React.Component {
                     <td>{team[1].highest}</td>
                     <td>{team[1].lowest}</td>
                     <td>{team[1].average.toFixed(2)}</td>
-                    <td>{team[1].averagePoints.toFixed(2)}</td>
+                    {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
                 </tr>
             )
             return false;
@@ -139,11 +138,11 @@ class Live extends React.Component {
     }
 
     compareTop8Column(a, b) {
-        if (a[1].average === b[1].average) {
-            return 0;
+        if (a[1].top8 === b[1].top8) {
+            return (a[1].average < b[1].average) ? -1 : 1;
         }
         else {
-            return (a[1].average < b[1].average) ? -1 : 1;
+            return (a[1].top8 > b[1].top8) ? -1 : 1;
         }
     }
 
@@ -152,11 +151,11 @@ class Live extends React.Component {
             speed: speed
         });
         if (speed === 'slow') {
-            this.loopTime = 500;
+            this.loopTime = 1000;
             this.iterations = 1;
         } else if (speed === 'medium') {
             this.loopTime = 200;
-            this.iterations = 1;
+            this.iterations = 10;
         } else if (speed === 'fast') {
             this.loopTime = 50;
             this.iterations = 100;
@@ -170,61 +169,99 @@ class Live extends React.Component {
     render() {
         return (
             <>
-                <h1>NRL Ladder Predictor</h1>
                 <Container>
                     <Row>
-                        <Col xs="12" md="3">
-
-                            <div className="controls" role="radiogroup">
-                                <div>Simulations: {this.currentIterations} </div>
-                                <div id="loop-speed">Speed:</div>
-                                <div>
-                                    <label className="radio-container" htmlFor="slow">
-                                        <input id="slow"
-                                            name="speed"
-                                            type="radio"
-                                            onChange={(e) => { this.changeSpeed('slow') }}
-                                            checked={this.state.speed === 'slow' ? 'checked' : ''} /> Slow
-                                    </label>
-                                </div>
-                                <div>
-                                    <label className="radio-container" htmlFor="medium">
-                                        <input id="medium"
-                                            name="speed"
-                                            type="radio"
-                                            onChange={(e) => { this.changeSpeed('medium') }}
-                                            checked={this.state.speed === 'medium' ? 'checked' : ''} /> Medium
-                                    </label>
-                                </div>
-                                <div>
-                                    <label className="radio-container" htmlFor="fast">
-                                        <input id="fast"
-                                            name="speed"
-                                            type="radio"
-                                            onChange={(e) => { this.changeSpeed('fast') }}
-                                            checked={this.state.speed === 'fast' ? 'checked' : ''} /> Fast
-                                    </label>
-                                </div>
-                            </div>
+                        <Col xs="12">
+                            <h1>NRL Ladder Predictor</h1>
+                            <p>This project compiles the results over many simulations of a season to find every teams chance of making the top 8.</p>
                         </Col>
-                        <Col xs="12" md="9">
+                    </Row>
+                    <Row>
+                        <Col xs="12" lg="12">
                             <div className="ladder">
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <th>Pos.</th>
+                                            <th></th>
                                             <th>Team</th>
                                             <th>Top 8 %</th>
                                             <th>Top 4 %</th>
                                             <th>Highest</th>
                                             <th>Lowest</th>
-                                            <th>Average</th>
-                                            <th>Points</th>
+                                            <th>Avg Pos.</th>
+                                            {/* <th>Points</th> */}
                                         </tr>
                                         {this.printLadder()}
                                     </tbody>
                                 </table>
                             </div>
+                        </Col>
+                        <Col xs="12" lg="12">
+                            <section>
+                                <h3>Controls</h3>
+                                <div className="controls" role="radiogroup">
+                                    <div>Simulations: {this.currentIterations}</div>
+                                    <div className="speed-controls">
+                                        <div id="loop-speed">Speed:</div>
+                                        <div>
+                                            <label className="radio-container" htmlFor="slow">
+                                                <input id="slow"
+                                                    name="speed"
+                                                    type="radio"
+                                                    onChange={(e) => { this.changeSpeed('slow') }}
+                                                    checked={this.state.speed === 'slow' ? 'checked' : ''} /> Slow (1 sim/s)
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label className="radio-container" htmlFor="medium">
+                                                <input id="medium"
+                                                    name="speed"
+                                                    type="radio"
+                                                    onChange={(e) => { this.changeSpeed('medium') }}
+                                                    checked={this.state.speed === 'medium' ? 'checked' : ''} /> Medium (50 sim/s)
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label className="radio-container" htmlFor="fast">
+                                                <input id="fast"
+                                                    name="speed"
+                                                    type="radio"
+                                                    onChange={(e) => { this.changeSpeed('fast') }}
+                                                    checked={this.state.speed === 'fast' ? 'checked' : ''} /> Fast (2000 sim/s)
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col xs="12">
+                            <section>
+                                <h3>Notes</h3>
+                                <ul>
+                                    <li>The data this is based on is up to date as of 5:55PM 15/08/19. I'll try to update this as often as I can but I can't guarantee it will always be up to date.</li>
+                                    <li>The speed changes the number of simulations per second. Slow is for dramatic effect, Fast is to calculate a more realistic average. WARNING: Some older devices may not be able to run Fast efficiently. If you believe your device can't handle that speed, try Medium instead.</li>
+                                    <li>The for/against of each game is selected randomly from 100 real results recorded from the NRL.</li>
+                                    <li>Included in the real 100 results is a single 0 point margin constituting a draw. This occurs in approximately 1% of games.</li>
+                                    <li>The longer you leave the simulation running, the more "correct" the simulation becomes.</li>
+                                    <li>The simluations do not consider which team is better. Every team has roughly a 50% chance of winning every game. The simulation merely tries to find and calculate each teams chances based on a higher number of scenarios.</li>
+                                    <li>This is not the most likely ladder as each teams average and percentage is independent of each other.</li>
+                                    <li>Table originally predicted average points but this was removed as it was basically the current ladder plus half the games to come.</li>
+                                </ul>
+                            </section>
+                        </Col>
+                        <Col xs="12">
+                            <section>
+                                <h3>Todos</h3>
+                                <ul>
+                                    <li>Need to make the page UX/UI look better. I'll probably work on this as I go along.</li>
+                                    <li>Add a toggle for a weighted/biased ladder where teams on top have a higher chance of victory.</li>
+                                    <li>Add a prediction for what the ladder will most likely be based off the simulations.</li>
+                                    <li>Capability to click on a team and see the chances of them making each position at seasons end.</li>
+                                    <li>Add a way for people to make their own predictions on future games which then adjusts the table accordingly.</li>
+                                </ul>
+                            </section>
                         </Col>
                     </Row>
                 </Container>
