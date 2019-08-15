@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/nrl-ladder-predictor/static/css/main.88f5c9cd.chunk.css",
-    "main.js": "/nrl-ladder-predictor/static/js/main.c868e9a7.chunk.js",
-    "main.js.map": "/nrl-ladder-predictor/static/js/main.c868e9a7.chunk.js.map",
+    "main.js": "/nrl-ladder-predictor/static/js/main.6c8b1b61.chunk.js",
+    "main.js.map": "/nrl-ladder-predictor/static/js/main.6c8b1b61.chunk.js.map",
     "runtime~main.js": "/nrl-ladder-predictor/static/js/runtime~main.f91e190c.js",
     "runtime~main.js.map": "/nrl-ladder-predictor/static/js/runtime~main.f91e190c.js.map",
-    "static/js/2.6747dcae.chunk.js": "/nrl-ladder-predictor/static/js/2.6747dcae.chunk.js",
-    "static/js/2.6747dcae.chunk.js.map": "/nrl-ladder-predictor/static/js/2.6747dcae.chunk.js.map",
+    "static/js/2.d16f0422.chunk.js": "/nrl-ladder-predictor/static/js/2.d16f0422.chunk.js",
+    "static/js/2.d16f0422.chunk.js.map": "/nrl-ladder-predictor/static/js/2.d16f0422.chunk.js.map",
     "index.html": "/nrl-ladder-predictor/index.html",
-    "precache-manifest.18a92ea70c0546935c281a6dd60b4e67.js": "/nrl-ladder-predictor/precache-manifest.18a92ea70c0546935c281a6dd60b4e67.js",
+    "precache-manifest.f695ef86e88d724add91ef51943ce476.js": "/nrl-ladder-predictor/precache-manifest.f695ef86e88d724add91ef51943ce476.js",
     "service-worker.js": "/nrl-ladder-predictor/service-worker.js",
     "static/css/main.88f5c9cd.chunk.css.map": "/nrl-ladder-predictor/static/css/main.88f5c9cd.chunk.css.map"
   }
