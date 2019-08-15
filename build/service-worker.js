@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/nrl-ladder-predictor/precache-manifest.f695ef86e88d724add91ef51943ce476.js"
+  "/nrl-ladder-predictor/precache-manifest.18a92ea70c0546935c281a6dd60b4e67.js"
 );
 
 self.addEventListener('message', (event) => {
