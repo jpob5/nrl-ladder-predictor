@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4587523784d92498a36ffaba10c003a8",
+    "revision": "a7249fcb9de3bf1cf7e73d007f9323c7",
     "url": "/nrl-ladder-predictor/index.html"
   },
   {
-    "revision": "5c76a466f93364ff44b9",
+    "revision": "19f34e7f90a44f7c16e7",
     "url": "/nrl-ladder-predictor/static/css/main.88f5c9cd.chunk.css"
   },
   {
-    "revision": "8e61d84aa07f0e8ea1d0",
-    "url": "/nrl-ladder-predictor/static/js/2.b1c19b4b.chunk.js"
+    "revision": "b2cc9c32289a2b27ec14",
+    "url": "/nrl-ladder-predictor/static/js/2.6747dcae.chunk.js"
   },
   {
-    "revision": "5c76a466f93364ff44b9",
-    "url": "/nrl-ladder-predictor/static/js/main.5df82f61.chunk.js"
+    "revision": "19f34e7f90a44f7c16e7",
+    "url": "/nrl-ladder-predictor/static/js/main.c868e9a7.chunk.js"
   },
   {
     "revision": "9289f1800e7a86866de0",
