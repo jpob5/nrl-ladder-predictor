@@ -157,8 +157,8 @@ class Live extends React.Component {
             this.loopTime = 200;
             this.iterations = 10;
         } else if (speed === 'fast') {
-            this.loopTime = 5;
-            this.iterations = 1000;
+            this.loopTime = 50;
+            this.iterations = 100;
         }
         clearInterval(this.loop);
         this.loop = setInterval(() => {
