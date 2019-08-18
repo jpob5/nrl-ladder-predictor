@@ -157,8 +157,8 @@ class Live extends React.Component {
             this.loopTime = 200;
             this.iterations = 10;
         } else if (speed === 'fast') {
-            this.loopTime = 50;
-            this.iterations = 100;
+            this.loopTime = 5;
+            this.iterations = 1000;
         }
         clearInterval(this.loop);
         this.loop = setInterval(() => {
@@ -173,7 +173,7 @@ class Live extends React.Component {
                     <Row>
                         <Col xs="12">
                             <h1>NRL Ladder Predictor</h1>
-                            <p>This project compiles the results over many simulations of a season to find every teams chance of making the top 8.</p>
+                            <p>This project compiles the results over many simulations for rest of the season to find each teams chance of making the top 8.</p>
                         </Col>
                     </Row>
                     <Row>
@@ -212,7 +212,7 @@ class Live extends React.Component {
                                                     checked={this.state.speed === 'slow' ? 'checked' : ''} /> Slow (1 sim/s)
                                             </label>
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <label className="radio-container" htmlFor="medium">
                                                 <input id="medium"
                                                     name="speed"
@@ -220,7 +220,7 @@ class Live extends React.Component {
                                                     onChange={(e) => { this.changeSpeed('medium') }}
                                                     checked={this.state.speed === 'medium' ? 'checked' : ''} /> Medium (50 sim/s)
                                             </label>
-                                        </div>
+                                        </div> */}
                                         <div>
                                             <label className="radio-container" htmlFor="fast">
                                                 <input id="fast"
@@ -240,14 +240,13 @@ class Live extends React.Component {
                             <section>
                                 <h3>Notes</h3>
                                 <ul>
-                                    <li>The data this is based on is up to date as of 9:17am 16/08/19. I'll try to update this as often as I can but I can't guarantee it will always be up to date.</li>
-                                    <li>The speed changes the number of simulations per second. Slow is for dramatic effect, Fast is to calculate a more realistic average. WARNING: Some older devices may not be able to run Fast efficiently. If you believe your device can't handle that speed, try Medium instead.</li>
-                                    <li>The for/against of each game is selected randomly from 100 real results recorded from the NRL.</li>
+                                    <li>The data this is based on is up to date as of 8:04PM 18/08/19. I'll try to update this as often as I can but I can't guarantee it will always be up to date.</li>
+                                    <li>The speed changes the number of simulations per second. Slow is for dramatic effect, Fast is to calculate a more accurate average.</li>
+                                    <li>The for/against of each game is selected randomly from 100 real results recorded in the NRL.</li>
                                     <li>Included in the real 100 results is a single 0 point margin constituting a draw. This occurs in approximately 1% of games.</li>
-                                    <li>The longer you leave the simulation running, the more "correct" the simulation becomes.</li>
-                                    <li>The simluations do not consider which team is better. Every team has roughly a 50% chance of winning every game. The simulation merely tries to find and calculate each teams chances based on a higher number of scenarios.</li>
-                                    <li>This is not the most likely ladder as each teams average and percentage is independent of each other.</li>
-                                    <li>Table originally predicted average points but this was removed as it was basically the current ladder plus half the games to come.</li>
+                                    <li>The longer you leave the simulation running, the more accurate the simulation becomes.</li>
+                                    <li>The simluations do not consider which team is better, nor is it biased in anyway. Every team has roughly a 50% chance of winning each game. The simulation merely tries to find and calculate each teams chances based on a large number of scenarios.</li>
+                                    <li>This is not representitive of what the final ladder will look like as a whole as each teams average and percentage is independent of each other.</li>
                                 </ul>
                             </section>
                         </Col>
@@ -257,9 +256,10 @@ class Live extends React.Component {
                                 <ul>
                                     <li>Need to make the page UX/UI look better. I'll probably work on this as I go along.</li>
                                     <li>Add a toggle for a weighted/biased ladder where teams on top have a higher chance of victory.</li>
-                                    <li>Add a prediction for what the ladder will most likely be based off the simulations.</li>
-                                    <li>Capability to click on a team and see the chances of them making each position at seasons end.</li>
+                                    <li>Add a prediction for what the final ladder will most likely be, based off the simulations.</li>
+                                    <li>Capability to click on a team and see the chances of that team making certain positions on the ladder at the end of season.</li>
                                     <li>Add a way for people to make their own predictions on future games which then adjusts the table accordingly.</li>
+                                    <li>Possibly make the simulation stop once it normalises to decrease overall load on devices.</li>
                                 </ul>
                             </section>
                         </Col>

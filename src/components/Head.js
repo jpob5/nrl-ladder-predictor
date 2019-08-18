@@ -12,7 +12,7 @@ class Head extends React.Component {
                     <meta name="theme-color" content="#000000" />
                     <meta
                         name="description"
-                        content="Web site created using create-react-app"
+                        content="An NRL scenario percentage calculator"
                     />
                     <title>NRL Laddder Predictor</title>
                     <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/images/apple-touch-icon-57x57.png" />
