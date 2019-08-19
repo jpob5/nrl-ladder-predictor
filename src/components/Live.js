@@ -2,10 +2,11 @@ import React from 'react';
 import { Container, Col, Row } from 'reactstrap';
 import $ from 'jquery';
 import { log } from './Helpers';
-import ladder from './Ladder';
+import realLadder from './RealLadder';
 import draw from './Draw';
 import realResults from './Results';
 import { originalTeams } from './Record';
+import Ladder from './Ladder';
 
 
 class Live extends React.Component {
@@ -13,7 +14,7 @@ class Live extends React.Component {
     constructor(props) {
         super(props);
 
-        this.ladder = ladder;
+        this.ladder = realLadder;
         this.currentIterations = 0;
         this.iterations = 1;
 
@@ -21,9 +22,13 @@ class Live extends React.Component {
 
         this.ladderType = 'dynamic';
 
+        this.teamLadder = [];
+        this.chosenTeam = null;
+
         this.loop = null;
         this.state = {
             currentIterations: 0,
+            showTeamLadder: false,
             speed: 'slow'
         }
 
@@ -61,13 +66,14 @@ class Live extends React.Component {
             }
             this.record[name].average = ((this.record[name].average * (this.currentIterations - 1)) + (j + 1)) / this.currentIterations;
             this.record[name].averagePoints = ((this.record[name].averagePoints * (this.currentIterations - 1)) + newLadder[j][1]) / this.currentIterations;
+            this.record[name].perPosition[j] += 1;
         }
     }
 
     calculatePercentage() {
         for (let x = 0; x < this.iterations; x++) {
             this.currentIterations++;
-            var newLadder = ladder.map(function (arr) {
+            var newLadder = realLadder.map(function (arr) {
                 return arr.slice();
             });
             for (let i = 0; i < draw.length; i++) {
@@ -102,6 +108,24 @@ class Live extends React.Component {
         this.setState({});
     }
 
+    createTeamLadder(team) {
+        this.teamLadder = [];
+        this.chosenTeam = team;
+        this.chosenTeam.perPosition.map((amount, index) => {
+            this.teamLadder.push(
+                <tr key={index} className={this.chosenTeam.name}>
+                    <td>{(index + 1)}</td>
+                    <td>{amount}</td>
+                    {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
+                </tr>
+            );
+            return false;
+        });
+        this.setState({
+            showTeamLadder: true
+        });
+    }
+
     printLadder() {
         let currentLadder = [];
         const recordAsArray = Object.entries(this.record);
@@ -112,7 +136,7 @@ class Live extends React.Component {
             const top4Percentage = (Math.floor((recordAsArray[index][1].top4 / this.currentIterations) * 10000) / 100);
             const top4SafePercentage = isNaN(top4Percentage) ? 0 : top4Percentage;
             currentLadder.push(
-                <tr key={index} className={team[1].name}>
+                <tr key={index} className={team[1].name} onClick={() => this.createTeamLadder(team[1])}>
                     <td>{(index + 1)}</td>
                     <td>{team[1].name}</td>
                     <td>{safePercentage.toFixed(2)}</td>
@@ -167,6 +191,21 @@ class Live extends React.Component {
     }
 
     render() {
+        if (this.state.showTeamLadder) {
+            this.teamLadder = [];
+            this.chosenTeam.perPosition.map((amount, index) => {
+                const percentage = (Math.floor((amount / this.currentIterations) * 10000) / 100);
+                const safePercentage = isNaN(percentage) ? 0 : percentage;
+                this.teamLadder.push(
+                    <tr key={index} className={this.chosenTeam.name}>
+                        <td>{(index + 1)}</td>
+                        <td>{safePercentage }</td>
+                        {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
+                    </tr>
+                );
+                return false;
+            });
+        }
         return (
             <>
                 <Container>
@@ -179,21 +218,9 @@ class Live extends React.Component {
                     <Row>
                         <Col xs="12" lg="12">
                             <div className="ladder">
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <th></th>
-                                            <th>Team</th>
-                                            <th>Top 8 %</th>
-                                            <th>Top 4 %</th>
-                                            <th>Highest</th>
-                                            <th>Lowest</th>
-                                            <th>Avg Pos.</th>
-                                            {/* <th>Points</th> */}
-                                        </tr>
-                                        {this.printLadder()}
-                                    </tbody>
-                                </table>
+                                {this.state.showTeamLadder ?
+                                    <table><tbody>{this.teamLadder}</tbody></table> :
+                                    <Ladder>{this.printLadder()}</Ladder>}
                             </div>
                         </Col>
                         <Col xs="12" lg="12">

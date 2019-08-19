@@ -1,20 +1,27 @@
-import { storm, roosters, raiders, rabbitohs, eagles, eels, broncos, sharks, tigers, panthers, knights, warriors, cowboys, dragons, bulldogs, titans } from './Teams';
+import React from 'react';
 
-const ladder = [[storm, 36, 277],
-[roosters, 32, 232],
-[raiders, 30, 157],
-[eagles, 28, 92],
-[rabbitohs, 28, 75],
-[eels, 28, 51],
-[broncos, 23, -40],
-[sharks, 22, 8],
-[panthers, 22, -75],
-[knights, 20, 15],
-[tigers, 20, -64],
-[warriors, 19, -98],
-[bulldogs, 18, -166],
-[dragons, 16, -106],
-[cowboys, 16, -135],
-[titans, 10, -223]];
+class Ladder extends React.Component {
+    render() {
+        return (
+            <>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th></th>
+                            <th>Team</th>
+                            <th>Top 8 %</th>
+                            <th>Top 4 %</th>
+                            <th>Highest</th>
+                            <th>Lowest</th>
+                            <th>Avg Pos.</th>
+                            {/* <th>Points</th> */}
+                        </tr>
+                        {this.props.children}
+                    </tbody>
+                </table>
+            </>
+        )
+    }
+}
 
-export default ladder;
+export default Ladder;
