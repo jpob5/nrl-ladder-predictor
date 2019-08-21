@@ -109,21 +109,28 @@ class Live extends React.Component {
     }
 
     createTeamLadder(team) {
-        this.teamLadder = [];
-        this.chosenTeam = team;
-        this.chosenTeam.perPosition.map((amount, index) => {
-            this.teamLadder.push(
-                <tr key={index} className={this.chosenTeam.name}>
-                    <td>{(index + 1)}</td>
-                    <td>{amount}</td>
-                    {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
-                </tr>
-            );
-            return false;
-        });
-        this.setState({
-            showTeamLadder: true
-        });
+        if (this.chosenTeam !== team) {
+            this.teamLadder = [];
+            this.chosenTeam = team;
+            this.chosenTeam.perPosition.map((amount, index) => {
+                this.teamLadder.push(
+                    <tr key={index} className={this.chosenTeam.name}>
+                        <td>{(index + 1)}</td>
+                        <td>{amount}</td>
+                        {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
+                    </tr>
+                );
+                return false;
+            });
+            this.setState({
+                showTeamLadder: true
+            });
+        } else {
+            this.chosenTeam = null;
+            this.setState({
+                showTeamLadder: false
+            });
+        }
     }
 
     printLadder() {
@@ -135,18 +142,35 @@ class Live extends React.Component {
             const safePercentage = isNaN(percentage) ? 0 : percentage;
             const top4Percentage = (Math.floor((recordAsArray[index][1].top4 / this.currentIterations) * 10000) / 100);
             const top4SafePercentage = isNaN(top4Percentage) ? 0 : top4Percentage;
-            currentLadder.push(
-                <tr key={index} className={team[1].name} onClick={() => this.createTeamLadder(team[1])}>
-                    <td>{(index + 1)}</td>
-                    <td>{team[1].name}</td>
-                    <td>{safePercentage.toFixed(2)}</td>
-                    <td>{top4SafePercentage.toFixed(2)}</td>
-                    <td>{team[1].highest}</td>
-                    <td>{team[1].lowest}</td>
-                    <td>{team[1].average.toFixed(2)}</td>
-                    {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
-                </tr>
-            )
+            if (this.state.showTeamLadder) {
+                const teamPercentage = (Math.floor((this.chosenTeam.perPosition[index] / this.currentIterations) * 10000) / 100);
+                const teamSafePercentage = isNaN(teamPercentage) ? 0 : teamPercentage;
+                currentLadder.push(
+                    <tr key={index} className={team[1].name + (this.chosenTeam.name === team[1].name ? ' active-team' : '')} onClick={() => this.createTeamLadder(team[1])}>
+                        <td>{(index + 1)}</td>
+                        <td>{team[1].name}</td>
+                        <td className="rank-percentage">{teamSafePercentage.toFixed(2)}</td>
+                        <td>{this.chosenTeam.name === team[1].name ? top4SafePercentage.toFixed(2) : '###'}</td>
+                        <td>{this.chosenTeam.name === team[1].name ? team[1].highest : '###'}</td>
+                        <td>{this.chosenTeam.name === team[1].name ? team[1].lowest : '###'}</td>
+                        <td>{this.chosenTeam.name === team[1].name ? team[1].average.toFixed(2) : '###'}</td>
+                        {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
+                    </tr>
+                )
+            } else {
+                currentLadder.push(
+                    <tr key={index} className={team[1].name} onClick={() => this.createTeamLadder(team[1])}>
+                        <td>{(index + 1)}</td>
+                        <td>{team[1].name}</td>
+                        <td>{safePercentage.toFixed(2)}</td>
+                        <td>{top4SafePercentage.toFixed(2)}</td>
+                        <td>{team[1].highest}</td>
+                        <td>{team[1].lowest}</td>
+                        <td>{team[1].average.toFixed(2)}</td>
+                        {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
+                    </tr>
+                )
+            }
             return false;
         });
         return currentLadder;
@@ -181,8 +205,8 @@ class Live extends React.Component {
             this.loopTime = 200;
             this.iterations = 10;
         } else if (speed === 'fast') {
-            this.loopTime = 50;
-            this.iterations = 100;
+            this.loopTime = 25;
+            this.iterations = 250;
         }
         clearInterval(this.loop);
         this.loop = setInterval(() => {
@@ -191,21 +215,6 @@ class Live extends React.Component {
     }
 
     render() {
-        if (this.state.showTeamLadder) {
-            this.teamLadder = [];
-            this.chosenTeam.perPosition.map((amount, index) => {
-                const percentage = (Math.floor((amount / this.currentIterations) * 10000) / 100);
-                const safePercentage = isNaN(percentage) ? 0 : percentage;
-                this.teamLadder.push(
-                    <tr key={index} className={this.chosenTeam.name}>
-                        <td>{(index + 1)}</td>
-                        <td>{safePercentage }</td>
-                        {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
-                    </tr>
-                );
-                return false;
-            });
-        }
         return (
             <>
                 <Container>
@@ -217,10 +226,8 @@ class Live extends React.Component {
                     </Row>
                     <Row>
                         <Col xs="12" lg="12">
-                            <div className="ladder">
-                                {this.state.showTeamLadder ?
-                                    <table><tbody>{this.teamLadder}</tbody></table> :
-                                    <Ladder>{this.printLadder()}</Ladder>}
+                            <div className={'ladder ' + (this.state.showTeamLadder ? 'show-team-percentages' : '')}>
+                                <Ladder>{this.printLadder()}</Ladder>
                             </div>
                         </Col>
                         <Col xs="12" lg="12">
@@ -254,7 +261,7 @@ class Live extends React.Component {
                                                     name="speed"
                                                     type="radio"
                                                     onChange={(e) => { this.changeSpeed('fast') }}
-                                                    checked={this.state.speed === 'fast' ? 'checked' : ''} /> Fast (2000 sim/s)
+                                                    checked={this.state.speed === 'fast' ? 'checked' : ''} /> Fast (10,000 sim/s)
                                             </label>
                                         </div>
                                     </div>
