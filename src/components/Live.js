@@ -221,7 +221,7 @@ class Live extends React.Component {
                     <Row>
                         <Col xs="12">
                             <h1>NRL Ladder Predictor</h1>
-                            <p>This project compiles the results over many simulations for rest of the season to find each teams chance of making the top 8.</p>
+                            <p>This project compiles the results over many simulations for the rest of the season to find each teams chance of making the top 8. Click on a team to see a breakdown of their chances at each position.</p>
                         </Col>
                     </Row>
                     <Row>
@@ -291,7 +291,7 @@ class Live extends React.Component {
                                     <li>Need to make the page UX/UI look better. I'll probably work on this as I go along.</li>
                                     <li>Add a toggle for a weighted/biased ladder where teams on top have a higher chance of victory.</li>
                                     <li>Add a prediction for what the final ladder will most likely be, based off the simulations.</li>
-                                    <li>Capability to click on a team and see the chances of that team making certain positions on the ladder at the end of season.</li>
+                                    <li className="line-through">Capability to click on a team and see the chances of that team making certain positions on the ladder at the end of season.</li>
                                     <li>Add a way for people to make their own predictions on future games which then adjusts the table accordingly.</li>
                                     <li>Possibly make the simulation stop once it normalises to decrease overall load on devices.</li>
                                 </ul>

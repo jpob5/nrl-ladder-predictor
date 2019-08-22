@@ -1,31 +1,41 @@
 body {
-    font-family: 'Oxygen', sans-serif;
+    font-family: "Oxygen", sans-serif;
     font-size: 1rem;
     color: $font-color;
-    background: $blue;
+    background: #f3f3f3;
     .container {
-        background: #fff;
+        //background: #fff;
     }
     h1 {
-        margin-top: 3rem;
+        margin-top: 4rem;
+        margin-bottom: 2rem;
         color: $blue;
+        font-size: 3rem;
+        @include media(sm) {
+            font-size: 4rem;
+        }
         text-align: center;
-        font-weight: bold;
+        border-bottom: 3px solid;
+        font-family: "Audiowide", "Oxygen", sans-serif;
     }
 
-    h2, h3 {
+    h2,
+    h3 {
         color: $blue;
         margin-bottom: 1rem;
     }
 
     section {
         background: #fff;
-        border: 2px solid $blue;
+        border: 1px solid $blue;
         padding: 15px 20px;
         margin-bottom: 20px;
     }
 
     li {
         margin-bottom: 0.5rem;
+    }
+    .line-through {
+        text-decoration: line-through;
     }
 }
