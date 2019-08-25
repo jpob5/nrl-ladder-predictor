@@ -6,9 +6,9 @@ const draw = [/*
     [broncos, rabbitohs],
     [sharks, warriors],
     [tigers, knights],
-    [dragons, roosters],*/
+    [dragons, roosters],
     [storm, titans],
-    [raiders, eagles],
+    [raiders, eagles],*/
     //week24
     [cowboys, bulldogs],
     [warriors, rabbitohs],

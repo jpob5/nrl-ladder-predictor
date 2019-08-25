@@ -2,9 +2,9 @@ import { storm, roosters, raiders, rabbitohs, eagles, eels, broncos, sharks, tig
 
 const realLadder = [[storm, 38, 293],
 [roosters, 34, 254],
-[raiders, 30, 157],
+[raiders, 30, 153],
+[eagles, 30, 96],
 [rabbitohs, 30, 77],
-[eagles, 28, 92],
 [eels, 28, 45],
 [sharks, 24, 34],
 [broncos, 23, -42],
