@@ -3,10 +3,10 @@ import { storm, roosters, raiders, rabbitohs, eagles, eels, broncos, sharks, tig
 const draw = [/*
     //week23
     [cowboys, panthers],
-    [broncos, rabbitohs],*/
+    [broncos, rabbitohs],
     [sharks, warriors],
     [tigers, knights],
-    [dragons, roosters],
+    [dragons, roosters],*/
     [storm, titans],
     [raiders, eagles],
     //week24
