@@ -14,6 +14,7 @@ class Ladder extends React.Component {
                             <th>Highest</th>
                             <th>Lowest</th>
                             <th>Avg Pos.</th>
+                            <th>Home Final %</th>
                             {/* <th>Points</th> */}
                         </tr>
                         {this.props.children}

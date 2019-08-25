@@ -142,6 +142,8 @@ class Live extends React.Component {
             const safePercentage = isNaN(percentage) ? 0 : percentage;
             const top4Percentage = (Math.floor((recordAsArray[index][1].top4 / this.currentIterations) * 10000) / 100);
             const top4SafePercentage = isNaN(top4Percentage) ? 0 : top4Percentage;
+            const homeFinal = Math.floor(((team[1].perPosition[0] + team[1].perPosition[1] + team[1].perPosition[4] + team[1].perPosition[5]) / this.currentIterations) * 10000) / 100;
+            const safeHomeFinal = isNaN(homeFinal) ? 0 : homeFinal
             if (this.state.showTeamLadder) {
                 const teamPercentage = (Math.floor((this.chosenTeam.perPosition[index] / this.currentIterations) * 10000) / 100);
                 const teamSafePercentage = isNaN(teamPercentage) ? 0 : teamPercentage;
@@ -154,6 +156,7 @@ class Live extends React.Component {
                         <td>{this.chosenTeam.name === team[1].name ? team[1].highest : '###'}</td>
                         <td>{this.chosenTeam.name === team[1].name ? team[1].lowest : '###'}</td>
                         <td>{this.chosenTeam.name === team[1].name ? team[1].average.toFixed(2) : '###'}</td>
+                        <td>{this.chosenTeam.name === team[1].name ? safeHomeFinal.toFixed(2) : '###'}</td>
                         {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
                     </tr>
                 )
@@ -167,6 +170,7 @@ class Live extends React.Component {
                         <td>{team[1].highest}</td>
                         <td>{team[1].lowest}</td>
                         <td>{team[1].average.toFixed(2)}</td>
+                        <td>{safeHomeFinal.toFixed(2)}</td>
                         {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
                     </tr>
                 )
@@ -274,7 +278,7 @@ class Live extends React.Component {
                             <section>
                                 <h3>Notes</h3>
                                 <ul>
-                                    <li>The data this is based on is up to date as of 3:07PM 25/08/19. I'll try to update this as often as I can but I can't guarantee it will always be up to date.</li>
+                                    <li>The data this is based on is up to date as of 4:21PM 25/08/19. I'll try to update this as often as I can but I can't guarantee it will always be up to date.</li>
                                     <li>The speed changes the number of simulations per second. Slow is for dramatic effect, Fast is to calculate a more accurate average.</li>
                                     <li>The for/against of each game is selected randomly from 100 real results recorded in the NRL.</li>
                                     <li>Included in the real 100 results is a single 0 point margin constituting a draw. This occurs in approximately 1% of games.</li>
@@ -294,6 +298,7 @@ class Live extends React.Component {
                                     <li className="line-through">Capability to click on a team and see the chances of that team making certain positions on the ladder at the end of season.</li>
                                     <li>Add a way for people to make their own predictions on future games which then adjusts the table accordingly.</li>
                                     <li>Possibly make the simulation stop once it normalises to decrease overall load on devices.</li>
+                                    <li className="line-through">Add each teams home qualifying final chance.</li>
                                 </ul>
                             </section>
                         </Col>

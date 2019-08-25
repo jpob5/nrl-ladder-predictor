@@ -1,6 +1,6 @@
 import { storm, roosters, raiders, rabbitohs, eagles, eels, broncos, sharks, tigers, panthers, knights, warriors, cowboys, dragons, bulldogs, titans } from './Teams';
 
-const realLadder = [[storm, 36, 277],
+const realLadder = [[storm, 38, 293],
 [roosters, 34, 254],
 [raiders, 30, 157],
 [rabbitohs, 30, 77],
@@ -15,6 +15,6 @@ const realLadder = [[storm, 36, 277],
 [warriors, 19, -124],
 [cowboys, 18, -121],
 [dragons, 16, -128],
-[titans, 10, -223]];
+[titans, 10, -239]];
 
 export default realLadder;
