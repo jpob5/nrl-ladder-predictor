@@ -26,6 +26,7 @@ const draw = [/*
     [bulldogs, broncos],
     [titans, dragons],
     [tigers, sharks],
-    [panthers, knights]];
+    [panthers, knights]
+];
 
 export default draw;

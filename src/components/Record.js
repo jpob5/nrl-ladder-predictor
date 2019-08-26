@@ -9,7 +9,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Roosters: {
         name: roosters,
@@ -19,7 +20,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Raiders: {
         name: raiders,
@@ -29,7 +31,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Rabbitohs: {
         name: rabbitohs,
@@ -39,7 +42,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     'Sea Eagles': {
         name: eagles,
@@ -49,7 +53,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Eels: {
         name: eels,
@@ -59,7 +64,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Broncos: {
         name: broncos,
@@ -69,7 +75,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Sharks: {
         name: sharks,
@@ -79,7 +86,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Tigers: {
         name: tigers,
@@ -89,7 +97,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Panthers: {
         name: panthers,
@@ -99,7 +108,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Knights: {
         name: knights,
@@ -109,7 +119,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Warriors: {
         name: warriors,
@@ -119,7 +130,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Cowboys: {
         name: cowboys,
@@ -129,7 +141,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Dragons: {
         name: dragons,
@@ -139,7 +152,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Bulldogs: {
         name: bulldogs,
@@ -149,7 +163,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     },
     Titans: {
         name: titans,
@@ -159,7 +174,8 @@ let originalTeams = {
         lowest: 0,
         average: 0,
         averagePoints: 0,
-        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        perPosition: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        gfWins: 0
     }
 }
 

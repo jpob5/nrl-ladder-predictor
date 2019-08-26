@@ -46,6 +46,7 @@ class Live extends React.Component {
     }
 
     calculateSeasonResults(newLadder) {
+        const gfWinner = this.calculateGrandFinalWinner(newLadder);
         for (let j = 0; j < newLadder.length; j++) {
             let name = newLadder[j][0];
             if (j < (8)) {
@@ -64,10 +65,114 @@ class Live extends React.Component {
             if (this.record[name].highest === 0 || this.record[name].highest > (j + 1)) {
                 this.record[name].highest = j + 1;
             }
+            if (gfWinner === name) {
+                this.record[name].gfWins++;
+            }
             this.record[name].average = ((this.record[name].average * (this.currentIterations - 1)) + (j + 1)) / this.currentIterations;
             this.record[name].averagePoints = ((this.record[name].averagePoints * (this.currentIterations - 1)) + newLadder[j][1]) / this.currentIterations;
             this.record[name].perPosition[j] += 1;
         }
+    }
+
+    calculateGrandFinalWinner(newLadder) {
+        let finalsTeams = [];
+        for (let i = 0; i < (newLadder.length / 2); i++) {
+            finalsTeams.push([newLadder[i][0], false, false, false, false]);
+        }
+
+        // Qualifying
+        let secondRound = [];
+        let byes = [];
+        let winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            finalsTeams[0][1] = true;
+            finalsTeams[0][2] = true;
+            byes.push(finalsTeams[0]);
+            secondRound.push(finalsTeams[3]);
+        } else {
+            finalsTeams[3][1] = true;
+            finalsTeams[3][2] = true;
+            byes.push(finalsTeams[3]);
+            secondRound.push(finalsTeams[0]);
+        }
+        winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            finalsTeams[1][1] = true;
+            finalsTeams[1][2] = true;
+            byes.push(finalsTeams[1]);
+            secondRound.push(finalsTeams[2]);
+        } else {
+            finalsTeams[2][1] = true;
+            finalsTeams[2][2] = true;
+            byes.push(finalsTeams[2]);
+            secondRound.push(finalsTeams[1]);
+        }
+        winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            finalsTeams[4][1] = true;
+            secondRound.push(finalsTeams[4]);
+        } else {
+            finalsTeams[7][1] = true;
+            secondRound.push(finalsTeams[7]);
+        }
+        winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            finalsTeams[5][1] = true;
+            secondRound.push(finalsTeams[5]);
+        } else {
+            finalsTeams[6][1] = true;
+            secondRound.push(finalsTeams[6]);
+        }
+
+        // Semi
+        let thirdRound = [byes[0], byes[1]];
+        winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            secondRound[0][2] = true;
+            thirdRound.push(secondRound[0]);
+        } else {
+            secondRound[2][2] = true;
+            thirdRound.push(secondRound[2]);
+        }
+        winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            secondRound[1][2] = true;
+            thirdRound.push(secondRound[1]);
+        } else {
+            secondRound[3][2] = true;
+            thirdRound.push(secondRound[3]);
+        }
+
+        // Prelim
+        let fourthRound = [];
+        winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            thirdRound[0][3] = true;
+            fourthRound.push(thirdRound[0]);
+        } else {
+            thirdRound[3][3] = true;
+            fourthRound.push(thirdRound[3]);
+        }
+        winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            thirdRound[1][3] = true;
+            fourthRound.push(thirdRound[1]);
+        } else {
+            thirdRound[2][3] = true;
+            fourthRound.push(thirdRound[2]);
+        }
+
+        // Grand Final
+        let winner = '';
+        winNum = Math.floor(Math.random() * 2);
+        if (winNum < 1) {
+            fourthRound[0][4] = true;
+            winner = fourthRound[0][0];
+        } else {
+            fourthRound[1][4] = true;
+            winner = fourthRound[1][0];
+        }
+        return winner;
     }
 
     calculatePercentage() {
@@ -103,6 +208,7 @@ class Live extends React.Component {
                 }
             }
             newLadder.sort(this.compareSecondColumn);
+            //this.calculateGrandFinalWinner(newLadder);
             this.calculateSeasonResults(newLadder);
         }
         this.setState({});
@@ -143,7 +249,9 @@ class Live extends React.Component {
             const top4Percentage = (Math.floor((recordAsArray[index][1].top4 / this.currentIterations) * 10000) / 100);
             const top4SafePercentage = isNaN(top4Percentage) ? 0 : top4Percentage;
             const homeFinal = Math.floor(((team[1].perPosition[0] + team[1].perPosition[1] + team[1].perPosition[4] + team[1].perPosition[5]) / this.currentIterations) * 10000) / 100;
-            const safeHomeFinal = isNaN(homeFinal) ? 0 : homeFinal
+            const safeHomeFinal = isNaN(homeFinal) ? 0 : homeFinal;
+            const grandFinal = (Math.floor((recordAsArray[index][1].gfWins / this.currentIterations) * 10000) / 100);
+            const safeGrandFinal = isNaN(grandFinal) ? 0 : grandFinal;
             if (this.state.showTeamLadder) {
                 const teamPercentage = (Math.floor((this.chosenTeam.perPosition[index] / this.currentIterations) * 10000) / 100);
                 const teamSafePercentage = isNaN(teamPercentage) ? 0 : teamPercentage;
@@ -157,6 +265,7 @@ class Live extends React.Component {
                         <td>{this.chosenTeam.name === team[1].name ? team[1].lowest : '###'}</td>
                         <td>{this.chosenTeam.name === team[1].name ? team[1].average.toFixed(2) : '###'}</td>
                         <td>{this.chosenTeam.name === team[1].name ? safeHomeFinal.toFixed(2) : '###'}</td>
+                        <td>{this.chosenTeam.name === team[1].name ? safeGrandFinal.toFixed(2) : '###'}</td>
                         {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
                     </tr>
                 )
@@ -171,6 +280,7 @@ class Live extends React.Component {
                         <td>{team[1].lowest}</td>
                         <td>{team[1].average.toFixed(2)}</td>
                         <td>{safeHomeFinal.toFixed(2)}</td>
+                        <td>{safeGrandFinal.toFixed(2)}</td>
                         {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
                     </tr>
                 )
@@ -299,6 +409,7 @@ class Live extends React.Component {
                                     <li>Add a way for people to make their own predictions on future games which then adjusts the table accordingly.</li>
                                     <li>Possibly make the simulation stop once it normalises to decrease overall load on devices.</li>
                                     <li className="line-through">Add each teams home qualifying final chance.</li>
+                                    <li>Add each teams chance of winning the grand final.</li>
                                 </ul>
                             </section>
                         </Col>
