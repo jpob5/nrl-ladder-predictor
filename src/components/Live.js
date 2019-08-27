@@ -1,13 +1,15 @@
 import React from 'react';
 import { Container, Col, Row } from 'reactstrap';
 import $ from 'jquery';
-import { log } from './Helpers';
+import { log, prettifyNumber } from './Helpers';
 import realLadder from './RealLadder';
 import draw from './Draw';
 import realResults from './Results';
 import { originalTeams } from './Record';
 import Ladder from './Ladder';
-
+import SimulateFinals from './SimulateFinals';
+import Controls from './Controls';
+import {sortLadder, sortSimulation} from './Sorts';
 
 class Live extends React.Component {
 
@@ -22,7 +24,6 @@ class Live extends React.Component {
 
         this.ladderType = 'dynamic';
 
-        this.teamLadder = [];
         this.chosenTeam = null;
 
         this.loop = null;
@@ -33,30 +34,32 @@ class Live extends React.Component {
         }
 
         this.record = $.extend(true, {}, originalTeams);
+
+        this.setSpeed = this.setSpeed.bind(this);
     }
 
     componentDidMount() {
-        this.loop = setInterval(() => {
-            this.calculatePercentage()
-        }, this.loopTime);
+        this.startLoop();
     }
 
     componentWillUnmount() {
         clearInterval(this.loop);
     }
 
+    startLoop() {
+        this.loop = setInterval(() => {
+            this.simulateSeason()
+        }, this.loopTime);
+    }
+
     calculateSeasonResults(newLadder) {
-        const gfWinner = this.calculateGrandFinalWinner(newLadder);
+        const gfWinner = SimulateFinals(newLadder);
         for (let j = 0; j < newLadder.length; j++) {
             let name = newLadder[j][0];
             if (j < (8)) {
                 this.record[name].top8++;
-            } else if (newLadder[j][1] === newLadder[8 - 1][1] && this.ladderType === 'basic') {
-                this.record[name].top8++;
             }
             if (j < (4)) {
-                this.record[name].top4++;
-            } else if (newLadder[j][1] === newLadder[4 - 1][1] && this.ladderType === 'basic') {
                 this.record[name].top4++;
             }
             if (this.record[name].lowest === 0 || this.record[name].lowest < (j + 1)) {
@@ -74,108 +77,7 @@ class Live extends React.Component {
         }
     }
 
-    calculateGrandFinalWinner(newLadder) {
-        let finalsTeams = [];
-        for (let i = 0; i < (newLadder.length / 2); i++) {
-            finalsTeams.push([newLadder[i][0], false, false, false, false]);
-        }
-
-        // Qualifying
-        let secondRound = [];
-        let byes = [];
-        let winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            finalsTeams[0][1] = true;
-            finalsTeams[0][2] = true;
-            byes.push(finalsTeams[0]);
-            secondRound.push(finalsTeams[3]);
-        } else {
-            finalsTeams[3][1] = true;
-            finalsTeams[3][2] = true;
-            byes.push(finalsTeams[3]);
-            secondRound.push(finalsTeams[0]);
-        }
-        winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            finalsTeams[1][1] = true;
-            finalsTeams[1][2] = true;
-            byes.push(finalsTeams[1]);
-            secondRound.push(finalsTeams[2]);
-        } else {
-            finalsTeams[2][1] = true;
-            finalsTeams[2][2] = true;
-            byes.push(finalsTeams[2]);
-            secondRound.push(finalsTeams[1]);
-        }
-        winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            finalsTeams[4][1] = true;
-            secondRound.push(finalsTeams[4]);
-        } else {
-            finalsTeams[7][1] = true;
-            secondRound.push(finalsTeams[7]);
-        }
-        winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            finalsTeams[5][1] = true;
-            secondRound.push(finalsTeams[5]);
-        } else {
-            finalsTeams[6][1] = true;
-            secondRound.push(finalsTeams[6]);
-        }
-
-        // Semi
-        let thirdRound = [byes[0], byes[1]];
-        winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            secondRound[0][2] = true;
-            thirdRound.push(secondRound[0]);
-        } else {
-            secondRound[2][2] = true;
-            thirdRound.push(secondRound[2]);
-        }
-        winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            secondRound[1][2] = true;
-            thirdRound.push(secondRound[1]);
-        } else {
-            secondRound[3][2] = true;
-            thirdRound.push(secondRound[3]);
-        }
-
-        // Prelim
-        let fourthRound = [];
-        winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            thirdRound[0][3] = true;
-            fourthRound.push(thirdRound[0]);
-        } else {
-            thirdRound[3][3] = true;
-            fourthRound.push(thirdRound[3]);
-        }
-        winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            thirdRound[1][3] = true;
-            fourthRound.push(thirdRound[1]);
-        } else {
-            thirdRound[2][3] = true;
-            fourthRound.push(thirdRound[2]);
-        }
-
-        // Grand Final
-        let winner = '';
-        winNum = Math.floor(Math.random() * 2);
-        if (winNum < 1) {
-            fourthRound[0][4] = true;
-            winner = fourthRound[0][0];
-        } else {
-            fourthRound[1][4] = true;
-            winner = fourthRound[1][0];
-        }
-        return winner;
-    }
-
-    calculatePercentage() {
+    simulateSeason() {
         for (let x = 0; x < this.iterations; x++) {
             this.currentIterations++;
             var newLadder = realLadder.map(function (arr) {
@@ -193,22 +95,18 @@ class Live extends React.Component {
                 for (let j = 0; j < newLadder.length; j++) {
                     if (newLadder[j][0] === winner) {
                         newLadder[j][1] += points;
-                        if (this.ladderType === 'dynamic') {
-                            newLadder[j][2] += winningAmount;
-                        }
+                        newLadder[j][2] += winningAmount;
+
                     }
                     if (newLadder[j][0] === loser) {
                         if (points === 0) {
                             newLadder[j][1] += points;
                         }
-                        if (this.ladderType === 'dynamic') {
-                            newLadder[j][2] -= winningAmount;
-                        }
+                        newLadder[j][2] -= winningAmount;
                     }
                 }
             }
-            newLadder.sort(this.compareSecondColumn);
-            //this.calculateGrandFinalWinner(newLadder);
+            newLadder.sort(sortSimulation);
             this.calculateSeasonResults(newLadder);
         }
         this.setState({});
@@ -216,18 +114,7 @@ class Live extends React.Component {
 
     createTeamLadder(team) {
         if (this.chosenTeam !== team) {
-            this.teamLadder = [];
             this.chosenTeam = team;
-            this.chosenTeam.perPosition.map((amount, index) => {
-                this.teamLadder.push(
-                    <tr key={index} className={this.chosenTeam.name}>
-                        <td>{(index + 1)}</td>
-                        <td>{amount}</td>
-                        {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
-                    </tr>
-                );
-                return false;
-            });
             this.setState({
                 showTeamLadder: true
             });
@@ -239,182 +126,66 @@ class Live extends React.Component {
         }
     }
 
-    printLadder() {
-        let currentLadder = [];
-        const recordAsArray = Object.entries(this.record);
-        recordAsArray.sort(this.compareTop8Column);
-        recordAsArray.map((team, index) => {
-            const percentage = (Math.floor((recordAsArray[index][1].top8 / this.currentIterations) * 10000) / 100);
-            const safePercentage = isNaN(percentage) ? 0 : percentage;
-            const top4Percentage = (Math.floor((recordAsArray[index][1].top4 / this.currentIterations) * 10000) / 100);
-            const top4SafePercentage = isNaN(top4Percentage) ? 0 : top4Percentage;
-            const homeFinal = Math.floor(((team[1].perPosition[0] + team[1].perPosition[1] + team[1].perPosition[4] + team[1].perPosition[5]) / this.currentIterations) * 10000) / 100;
-            const safeHomeFinal = isNaN(homeFinal) ? 0 : homeFinal;
-            const grandFinal = (Math.floor((recordAsArray[index][1].gfWins / this.currentIterations) * 10000) / 100);
-            const safeGrandFinal = isNaN(grandFinal) ? 0 : grandFinal;
-            if (this.state.showTeamLadder) {
-                const teamPercentage = (Math.floor((this.chosenTeam.perPosition[index] / this.currentIterations) * 10000) / 100);
-                const teamSafePercentage = isNaN(teamPercentage) ? 0 : teamPercentage;
-                currentLadder.push(
-                    <tr key={index} className={team[1].name + (this.chosenTeam.name === team[1].name ? ' active-team' : '')} onClick={() => this.createTeamLadder(team[1])}>
-                        <td>{(index + 1)}</td>
-                        <td>{team[1].name}</td>
-                        <td className="rank-percentage">{teamSafePercentage.toFixed(2)}</td>
-                        <td>{this.chosenTeam.name === team[1].name ? top4SafePercentage.toFixed(2) : '###'}</td>
-                        <td>{this.chosenTeam.name === team[1].name ? team[1].highest : '###'}</td>
-                        <td>{this.chosenTeam.name === team[1].name ? team[1].lowest : '###'}</td>
-                        <td>{this.chosenTeam.name === team[1].name ? team[1].average.toFixed(2) : '###'}</td>
-                        <td>{this.chosenTeam.name === team[1].name ? safeHomeFinal.toFixed(2) : '###'}</td>
-                        <td>{this.chosenTeam.name === team[1].name ? safeGrandFinal.toFixed(2) : '###'}</td>
-                        {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
-                    </tr>
-                )
-            } else {
-                currentLadder.push(
-                    <tr key={index} className={team[1].name} onClick={() => this.createTeamLadder(team[1])}>
-                        <td>{(index + 1)}</td>
-                        <td>{team[1].name}</td>
-                        <td>{safePercentage.toFixed(2)}</td>
-                        <td>{top4SafePercentage.toFixed(2)}</td>
-                        <td>{team[1].highest}</td>
-                        <td>{team[1].lowest}</td>
-                        <td>{team[1].average.toFixed(2)}</td>
-                        <td>{safeHomeFinal.toFixed(2)}</td>
-                        <td>{safeGrandFinal.toFixed(2)}</td>
-                        {/* <td>{team[1].averagePoints.toFixed(2)}</td> */}
-                    </tr>
-                )
-            }
-            return false;
-        });
-        return currentLadder;
+    getPercentage(wins) {
+        const percentage = wins / this.currentIterations;
+        return prettifyNumber(percentage);
     }
 
-    compareSecondColumn(a, b) {
-        if (a[1] === b[1]) {
-            return (a[2] > b[2]) ? -1 : 1;
-        }
-        else {
-            return (a[1] > b[1]) ? -1 : 1;
-        }
-    }
-
-    compareTop8Column(a, b) {
-        if (a[1].top8 === b[1].top8) {
-            return (a[1].average < b[1].average) ? -1 : 1;
-        }
-        else {
-            return (a[1].top8 > b[1].top8) ? -1 : 1;
-        }
-    }
-
-    changeSpeed(speed) {
+    setSpeed(speed) {
         this.setState({
             speed: speed
         });
         if (speed === 'slow') {
             this.loopTime = 1000;
             this.iterations = 1;
-        } else if (speed === 'medium') {
-            this.loopTime = 200;
-            this.iterations = 10;
         } else if (speed === 'fast') {
             this.loopTime = 25;
             this.iterations = 250;
         }
         clearInterval(this.loop);
-        this.loop = setInterval(() => {
-            this.calculatePercentage()
-        }, this.loopTime);
+        this.startLoop();
+    }
+
+    renderLadder() {
+        let currentLadder = [];
+        const recordAsArray = Object.entries(this.record);
+        recordAsArray.sort(sortLadder);
+        recordAsArray.map((team, index) => {
+            const percentage = this.getPercentage(recordAsArray[index][1].top8);
+            const top4Percentage = this.getPercentage(recordAsArray[index][1].top4);
+            const homeFinal = this.getPercentage(team[1].perPosition[0] + team[1].perPosition[1] + team[1].perPosition[4] + team[1].perPosition[5]);
+            const grandFinal = this.getPercentage(recordAsArray[index][1].gfWins);
+            const teamPercentage = this.state.showTeamLadder ? this.getPercentage(this.chosenTeam.perPosition[index]) : 0;
+            const isCurrentTeam = this.state.showTeamLadder ? this.chosenTeam.name === team[1].name : false;
+            currentLadder.push(
+                <tr key={index} className={team[1].name + (isCurrentTeam ? ' active-team' : '')} onClick={() => this.createTeamLadder(team[1])}>
+                    <td>{(index + 1)}</td>
+                    <td>{team[1].name}</td>
+                    <td className={this.state.showTeamLadder ? "rank-percentage" : ''}>{this.state.showTeamLadder ? teamPercentage : percentage}</td>
+                    <td>{(isCurrentTeam || !this.state.showTeamLadder) ? top4Percentage : '###'}</td>
+                    <td>{(isCurrentTeam || !this.state.showTeamLadder) ? team[1].highest : '###'}</td>
+                    <td>{(isCurrentTeam || !this.state.showTeamLadder) ? team[1].lowest : '###'}</td>
+                    <td>{(isCurrentTeam || !this.state.showTeamLadder) ? team[1].average.toFixed(2) : '###'}</td>
+                    <td>{(isCurrentTeam || !this.state.showTeamLadder) ? homeFinal : '###'}</td>
+                    <td>{(isCurrentTeam || !this.state.showTeamLadder) ? grandFinal : '###'}</td>
+                </tr>
+            )
+            return false;
+        });
+        return currentLadder;
     }
 
     render() {
         return (
             <>
-                <Container>
-                    <Row>
-                        <Col xs="12">
-                            <h1>NRL Ladder Predictor</h1>
-                            <p>This project compiles the results over many simulations for the rest of the season to find each teams chance of making the top 8. Click on a team to see a breakdown of their chances at each position.</p>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs="12" lg="12">
-                            <div className={'ladder ' + (this.state.showTeamLadder ? 'show-team-percentages' : '')}>
-                                <Ladder>{this.printLadder()}</Ladder>
-                            </div>
-                        </Col>
-                        <Col xs="12" lg="12">
-                            <section>
-                                <h3>Controls</h3>
-                                <div className="controls" role="radiogroup">
-                                    <div>Simulations: {this.currentIterations}</div>
-                                    <div className="speed-controls">
-                                        <div id="loop-speed">Speed:</div>
-                                        <div>
-                                            <label className="radio-container" htmlFor="slow">
-                                                <input id="slow"
-                                                    name="speed"
-                                                    type="radio"
-                                                    onChange={(e) => { this.changeSpeed('slow') }}
-                                                    checked={this.state.speed === 'slow' ? 'checked' : ''} /> Slow (1 sim/s)
-                                            </label>
-                                        </div>
-                                        {/* <div>
-                                            <label className="radio-container" htmlFor="medium">
-                                                <input id="medium"
-                                                    name="speed"
-                                                    type="radio"
-                                                    onChange={(e) => { this.changeSpeed('medium') }}
-                                                    checked={this.state.speed === 'medium' ? 'checked' : ''} /> Medium (50 sim/s)
-                                            </label>
-                                        </div> */}
-                                        <div>
-                                            <label className="radio-container" htmlFor="fast">
-                                                <input id="fast"
-                                                    name="speed"
-                                                    type="radio"
-                                                    onChange={(e) => { this.changeSpeed('fast') }}
-                                                    checked={this.state.speed === 'fast' ? 'checked' : ''} /> Fast (10,000 sim/s)
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs="12">
-                            <section>
-                                <h3>Notes</h3>
-                                <ul>
-                                    <li>The data this is based on is up to date as of 6:37PM 25/08/19. I'll try to update this as often as I can but I can't guarantee it will always be up to date.</li>
-                                    <li>The speed changes the number of simulations per second. Slow is for dramatic effect, Fast is to calculate a more accurate average.</li>
-                                    <li>The for/against of each game is selected randomly from 100 real results recorded in the NRL.</li>
-                                    <li>Included in the real 100 results is a single 0 point margin constituting a draw. This occurs in approximately 1% of games.</li>
-                                    <li>The longer you leave the simulation running, the more accurate the simulation becomes.</li>
-                                    <li>The simluations do not consider which team is better, nor is it biased in anyway. Every team has roughly a 50% chance of winning each game. The simulation merely tries to find and calculate each teams chances based on a large number of scenarios.</li>
-                                    <li>This is not representitive of what the final ladder will look like as a whole as each teams average and percentage is independent of each other.</li>
-                                </ul>
-                            </section>
-                        </Col>
-                        <Col xs="12">
-                            <section>
-                                <h3>Todos</h3>
-                                <ul>
-                                    <li>Need to make the page UX/UI look better. I'll probably work on this as I go along.</li>
-                                    <li>Add a toggle for a weighted/biased ladder where teams on top have a higher chance of victory.</li>
-                                    <li>Add a prediction for what the final ladder will most likely be, based off the simulations.</li>
-                                    <li className="line-through">Capability to click on a team and see the chances of that team making certain positions on the ladder at the end of season.</li>
-                                    <li>Add a way for people to make their own predictions on future games which then adjusts the table accordingly.</li>
-                                    <li>Possibly make the simulation stop once it normalises to decrease overall load on devices.</li>
-                                    <li className="line-through">Add each teams home qualifying final chance.</li>
-                                    <li>Add each teams chance of winning the grand final.</li>
-                                </ul>
-                            </section>
-                        </Col>
-                    </Row>
-                </Container>
+                <Col xs="12" lg="12">
+                    <div className={'ladder ' + (this.state.showTeamLadder ? 'show-team-percentages' : '')}>
+                        <Ladder>{this.renderLadder()}</Ladder>
+                    </div>
+                </Col>
+                <Col xs="12" lg="12">
+                    <Controls iterations={this.currentIterations} setSpeed={this.setSpeed} currentSpeed={this.state.speed} />
+                </Col>
             </>
         );
     }
