@@ -8,11 +8,11 @@ const draw = [/*
     [tigers, knights],
     [dragons, roosters],
     [storm, titans],
-    [raiders, eagles],*/
+    [raiders, eagles],
     //week24
     [cowboys, bulldogs],
     [warriors, rabbitohs],
-    [broncos, eels],
+    [broncos, eels],*/
     [knights, titans],
     [eagles, storm],
     [roosters, panthers],
